@@ -40,7 +40,25 @@ public class Main {
     public static boolean PrintWordWhitColor(char[] inputWord, char[] correctWord) { 
         boolean correct = true;
         char[] answerTemp = correctWord; // 
-        int[] colorForLetter = new int[5]; // 문자별로 색깔을 달리 하기 위한 배열
+        int[] colorForLetter = new int[5]; // 회색 = 0, 노랑 = 1, 초록 = 2
+
+        for (int i = 0; i < 5; i++) {
+            if(inputWord[i] == answerTemp[i]) {
+                answerTemp[i] = '-';
+                colorForLetter[i] = 2;
+            } else {
+                correct = false;
+            }
+        }
+
+        for (int j = 0; j < 5; j++) {
+            for(int k = 0; k<5; k++){
+                if(inputWord[j] == answerTemp[k] && colorForLetter[j] !=2) {
+                    colorForLetter[j] = 1;
+                    answerTemp[k] = '-';
+                }
+            }
+        }
     }
 
     private static String ReturnRandomWord() { // 랜덤으로 한 단어를 반환
