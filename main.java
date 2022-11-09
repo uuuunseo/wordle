@@ -30,7 +30,7 @@ public class Main {
                 answer[i] = answerChoosen.charAt(i);
                 input[i] = R1.charAt(i);
             }
-            if(PrintWordWithColor(input, answer)) { //PrintWordWhitColor가 ture 값을 주면 done = true
+            if(PrintWordWhitColor(input, answer)) { //PrintWordWhitColor가 ture 값을 주면 done = true
                 done = true;
             }
         }
