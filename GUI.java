@@ -43,7 +43,7 @@ public class GUI extends JFrame implements ActionListener{
         frame = new JFrame();
         frame.setSize(400, 600); //화면 크기
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        frame.setTitle("Wordle"); // 제목
+        frame.setTitle("워들워들"); // 제목
         frame.setLocationRelativeTo(null); 
         frame.add(panel); //패널 추가 
 
@@ -51,6 +51,23 @@ public class GUI extends JFrame implements ActionListener{
         Title = new JLabel("Wordle: ");
         Title.setBounds(10, 20, 80, 25 );
         panel.add(Title);
+
+        panel.setLayout(null);
+        stats = new JLabel("다섯글자 영단어를 입력해주세요");
+        stats.setBounds(10, 50, 180, 25);
+        panel.add(stats);
+
+        userText1 = new JTextField();
+        userText1.addActionListener(new GUI());
+        userText1.setBounds(40, 80 + (0 * 25), 80, 25);
+        panel.add(userText1);
+
+        JButton button = new JButton("Enter");
+        button.setBounds(100, 20, 80, 25);
+        button.addActionListener(new GUI());
+        panel.add(button);
+
+        
     }
 
 }
