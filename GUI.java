@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import java.util.Scanner;
 import javax.xml.transform.Templates;
 import java.io.*;
@@ -122,8 +124,97 @@ public class GUI extends JFrame implements ActionListener{
         userText1.setVisible(false);
 
         if (!done) {
-            stats.setText("");
+            stats.setText("<html><font size = '1' color = red> " + "정답은 : " + new String(answerChoosen) + "</font> <font");
         }
+        else {
+            stats.setText("<html><font size='1' color=green> " + "시도한 횟수" + tries + "</font> <font");
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        EnterWord();
+    }
+
+    public static void EnterWord() {
+        if(IsAValidWord(userText1.getText(), possibleWords)) ButtonPressed();
+        else System.out.println("Wordle: 유효한 단어가 아닙니다.");
+    }
+
+    public static void ButtonPressed() {
+        userText1.setBounds(40, 80 + ((tries + 1) * 25), 80, 25);
+
+        String userInput = userText1.getText();
+        int[] colorOfLetters = PlayWordle(userText1);
+
+        done = true;
+        for(int i : colorOfLetters) {
+            if(i != 2) done = false;
+        }
+        if(done || tries > 5) EndWordle();
+
+        String[] numsToColors = new String[5];
+        for(int i = 0; i < 5; i++) {
+            if(colorOfLetters[i] == 0) numsToColors[i] = "black";
+            else if(colorOfLetters[i] == 1) numsToColors[i] = "orange";
+            else if (colorOfLetters[i] == 2) numsToColors[i] = "green"; 
+        }
+
+        System.out.println("Set colors to " + numsToColors[0] + " " + numsToColors[1] + " " + numsToColors[2] + numsToColors[3] + " " + numsToColors[4] + " User Input was " + userInput + " answer was " + answerChoosen + " work on word is " + new String(answer));
+        String finalString = (
+            "<html><font size='5' color=" + numsToColors[0] + "> " + userInput.charAt(0) + "</font> <font            " +
+            "<html><font size='5' color=" + numsToColors[1] + "> " + userInput.charAt(1) + "</font> <font            " +
+            "<html><font size='5' color=" + numsToColors[2] + "> " + userInput.charAt(2) + "</font> <font            " +
+            "<html><font size='5' color=" + numsToColors[3] + "> " + userInput.charAt(3) + "</font> <font            " +
+            "<html><font size='5' color=" + numsToColors[4] + "> " + userInput.charAt(4) + "</font> <font            ");
+            setNextLabel(finalString);
+
+            userText1.setText("");
+    }
+
+    public static int[] PlayWordle(String InputWordleWord) {
+        done = false;
+        tries++;
+
+        String R1 = InputWordleWord.toLowerCase();
+
+        if(!IsAValidWord(R1, possibleWords)) {
+            System.out.println("wasnt a good word");
+        } else {
+            for(int i = 0; i < 5; i++) {
+                input[i] = R1.charAt(i);
+            }
+        }
+
+        for(int i = 0; i < 5; i++) answer[i] = answerChoosen.charAt(i);
+        return ReturnColorOfLeters(input, answer);
+    }
+
+    public static void setNextLabel(String string) {
+        labels[tries -1].setText(string);
+    }
+
+    public static int[] ReturnColorOfLeters(char[] inputWord, char[] correctWord) {
+        char[] answerTemp = correctWord;
+        int[] colorForLetter = new int[5];
+
+        for(int i = 0; i < 5; i++) {
+            if(inputWord[i] == answerTemp[i]) {
+                answerTemp[i] = '-';
+                colorForLetter[i] = 2;
+            }
+        }
+
+        for (int j = 0; j < 5; j++) {
+            for(int k = 0; k<5; k++) {
+                if(inputWord[j] == answerTemp[k] && colorForLetter[j] !=2){
+                    colorForLetter[j] = 1;
+                    answerTemp[k] = '-';
+                }             
+            }
+        }
+
+        
     }
 
 }
