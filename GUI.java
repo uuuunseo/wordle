@@ -145,7 +145,7 @@ public class GUI extends JFrame implements ActionListener{
         userText1.setBounds(40, 80 + ((tries + 1) * 25), 80, 25);
 
         String userInput = userText1.getText();
-        int[] colorOfLetters = PlayWordle(userText1);
+        int[] colorOfLetters = PlayWordle(userInput);
 
         done = true;
         for(int i : colorOfLetters) {
