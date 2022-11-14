@@ -179,7 +179,7 @@ public class GUI extends JFrame implements ActionListener{
         String R1 = InputWordleWord.toLowerCase();
 
         if(!IsAValidWord(R1, possibleWords)) {
-            System.out.println("wasnt a good word");
+            System.out.println("틀렸습니다.");
         } else {
             for(int i = 0; i < 5; i++) {
                 input[i] = R1.charAt(i);
@@ -214,7 +214,47 @@ public class GUI extends JFrame implements ActionListener{
             }
         }
 
-        
+        for (int m = 0; m < 5; m++) {
+            if (colorForLetter[m] == 0) System.out.print(inputWord[m]);
+            if (colorForLetter[m] == 1) System.out.print(ANSI_YELLOW + inputWord[m] + ANSI_RESET);
+            if (colorForLetter[m] == 2) System.out.print(ANSI_GREEN + inputWord[m] + ANSI_RESET);
+        }
+
+        System.out.println("");
+        return colorForLetter;
     }
 
+    public static boolean IsAValidWord(String input, String[] possibleWords) {
+        if (input.length() < 5) {
+            System.out.println("Wordle: 입력한 단어 수가 적습니다.");
+            return false;
+        }
+        for (String string : possibleWords) {
+            if (string.equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String ReturnRandomWord(){
+
+        String[] answerList = new String[2315];
+        try {
+            File myObj = new File("wordleAnswers.txt");
+            Scanner myReader = new Scanner(myObj);
+            int indexCounter = 0;
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                answerList[indexCounter] = data;
+                indexCounter++;
+            }
+            myReader.close();   
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        return answerList[(int)(Math.random() * (answerList.length - 1))];
+    }
 }
