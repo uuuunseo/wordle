@@ -79,7 +79,7 @@ public class GUI extends JFrame implements ActionListener {
         labels = new JLabel[6];
         for (int i = 0; i < 6; i++) {
             labels[i] = new JLabel("<html><font size='5' color=blue> ----- </font> <font");
-            labels[i].setBounds(44, 80 + (i * 25), 80, 25);
+            labels[i].setBounds(44, 80 + (i * 25), 90, 25);
             panel.add(labels[i]);
         }
 
